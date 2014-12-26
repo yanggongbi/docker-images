@@ -1,0 +1,18 @@
+bambooserver:
+  build: . 
+  ports:
+    - "8085:8085"
+    - "54663:54663"
+  environment:
+    BAMBOO_VERSION: 5.7.1
+    BAMBOO_HOME: /home/bamboo
+    JAVA_OPTS: -Xmx1024m
+    TZ: Asia/Shanghai
+  links:
+    - dockerimages_postgres_1:db
+#  volumes_from:
+#    - postgres
+#    - django
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/bamboo:/home/bamboo"

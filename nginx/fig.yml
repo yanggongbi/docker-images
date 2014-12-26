@@ -1,0 +1,8 @@
+nginx:
+  build: . 
+  volumes:
+    - "/var/log/nginx"
+    - "/nginx/ssl"
+  ports:
+    - "7085:80"
+    - "6085:6085"

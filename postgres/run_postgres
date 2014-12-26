@@ -1,0 +1,16 @@
+#!/bin/bash
+# This script is specified in Dockerfile along with "ENTRYPOINT".
+# When you issue "docker run" to start a container, this script
+# will be triggered automatically, and the whole command part of
+# "docker run" will be parameters of this script.
+# 
+# This script is used to put db data into an external volume,
+# and then start postgres process. So, the comand part of "docker run"
+# should be the mount point of the external volume.
+
+if [ `ls -R $data_dir | wc -l` -eq 1 ]
+then
+    /usr/lib/postgresql/9.3/bin/pg_ctl initdb -D $data_dir
+fi
+
+/usr/lib/postgresql/9.3/bin/postgres -D /var/lib/postgresql/9.3/main -c config_file=/etc/postgresql/9.3/main/postgresql.conf

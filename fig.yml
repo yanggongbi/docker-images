@@ -1,0 +1,35 @@
+---
+postgres:
+  build: postgres/
+  volumes:
+    - "/var/lib/docker/vfs/dir/3794070bd2aa26eb54dbe7caabf762afd8cd72f8bbe6089f0e88109ac4cddd41:/var/log/postgresql"
+    - "/var/lib/docker/vfs/dir/999950d5cafc6a39734de6b6d7c727deca9d4cc77e379381d47fe8be99a0289a:/var/lib/postgresql"
+
+bambooserver:
+  build: bamboo-server/
+  ports:
+    - "8085:8085"
+    - "54663:54663" 
+  environment:
+    BAMBOO_VERSION: 5.7.1
+    BAMBOO_HOME: /home/bamboo
+    JAVA_OPTS: -Xmx1024m
+    TZ: Asia/Shanghai
+  links:
+    - postgres:db
+#  volumes_from:
+#    - postgres
+#    - django
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/home/bamboo:/home/bamboo"
+
+nginx:
+  build: nginx/ 
+  volumes:
+    - "/var/log/nginx"
+    - "/nginx/ssl"
+  ports:
+    - "6085:443"
+  links:
+    - bambooserver:bambooserver
