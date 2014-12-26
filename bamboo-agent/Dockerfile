@@ -2,8 +2,8 @@
 #
 # VERSION               0.0.1
 
-FROM hwuethrich/supervisord
-MAINTAINER H. Wüthrich "hw@5px.ch"
+FROM luhe/supervisord
+# MAINTAINER H. Wüthrich "hw@5px.ch"
 
 # Environment
 ENV BAMBOO_USER   bamboo
